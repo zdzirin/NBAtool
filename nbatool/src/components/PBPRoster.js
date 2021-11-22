@@ -41,8 +41,8 @@ export default function PBPRoster(props) {
             <td>SF</td>
             <td>PF</td>
             <td>C</td>
-            <td>On Court +/-</td>
-            <td>Net +/-</td>
+            <td className={styles.hide}>On Court +/-</td>
+            <td className={styles.hide}>Net +/-</td>
           </tr>
         </thead>
         <tbody>{createTableBodyFromRoster(roster)}</tbody>
@@ -95,6 +95,16 @@ function createTableDataFromField(field, value) {
       </td>
     );
   } else {
-    return <td>{value}</td>;
+    return (
+      <td
+        className={
+          field === "plus_minus_net" || field === "plus_minus_on"
+            ? styles.hide
+            : ""
+        }
+      >
+        {value}
+      </td>
+    );
   }
 }
