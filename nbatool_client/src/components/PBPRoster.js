@@ -3,7 +3,7 @@ import { ABBREVIATION_TO_TEAM } from "../consts";
 import styles from "./styles/pbrroster.module.css";
 
 export default function PBPRoster(props) {
-  const URL = `http://localhost:1738/pbp_roster/${props.team}`;
+  const URL = `/pbp_roster/${props.team}`;
   const [roster, setRoster] = useState([]);
   const [rosterIsSet, setRosterIsSet] = useState(false);
   const [rosterError, setRosterError] = useState(false);

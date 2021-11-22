@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 });
 
 // Rosters
-import { getPBPRosterByTeam } from "./rosters/pbproster.js";
+import { getPBPRosterByTeam } from "./api/pbproster.js";
 
 app.get("/pbp_roster/:team", (req, res) => {
   getPBPRosterByTeam(req.params.team)
@@ -24,7 +24,7 @@ app.get("/pbp_roster/:team", (req, res) => {
 });
 
 // Defense
-import { getDBPByTeam } from "./defense/defensebyposition.js";
+import { getDBPByTeam } from "./api/defensebyposition.js";
 
 app.get("/dbp_stats/:team", (req, res) => {
   getDBPByTeam(req.params.team)
