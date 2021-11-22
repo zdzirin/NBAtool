@@ -45,6 +45,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/nbatool_client/build/index.html"));
 });
 
-app.listen(port, () => {
-  console.log(`NBAtool Backend listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log(
+    `NBAtool Backend listening at http://localhost:${process.env.PORT || port}`
+  );
 });
