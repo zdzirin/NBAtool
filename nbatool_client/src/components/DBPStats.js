@@ -3,7 +3,7 @@ import { ABBREVIATION_TO_TEAM } from "../consts";
 import styles from "./styles/dbpstats.module.css";
 
 export default function DBPStats(props) {
-  const URL = `/dbp_stats/${props.team}`;
+  const URL = `/api/dbp_stats/${props.team}`;
   const [stats, setStats] = useState([]);
   const [statsSet, setStatsSet] = useState(false);
   const [range, setRange] = useState(0);

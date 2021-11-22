@@ -1,10 +1,10 @@
-import fetch from "node-fetch";
-import cheerio from "cheerio";
-import {
+const fetch = require("node-fetch");
+const cheerio = require("cheerio");
+const {
   DBP_INDEX_TO_STAT,
   ABBREVIATION_TO_TEAM,
   TEAM_TO_ABBREVIATION,
-} from "../consts.js";
+} = require("../consts.js");
 
 let url =
   "https://www.fantasypros.com/daily-fantasy/nba/fanduel-defense-vs-position.php";
@@ -41,7 +41,9 @@ async function getTeamData(team) {
   return teamData;
 }
 
-export async function getDBPByTeam(team) {
+async function getDBPByTeam(team) {
   let data = await getTeamData(team);
   return data;
 }
+
+module.exports = { getDBPByTeam };

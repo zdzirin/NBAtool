@@ -1,4 +1,4 @@
-export const PBP_PLAYER_DATA = [
+const PBP_PLAYER_DATA = [
   "player",
   "g",
   "mp",
@@ -11,7 +11,7 @@ export const PBP_PLAYER_DATA = [
   "plus_minus_net",
 ];
 
-export const DBP_INDEX_TO_STAT = {
+const DBP_INDEX_TO_STAT = {
   1: "pts",
   2: "reb",
   3: "ast",
@@ -21,7 +21,7 @@ export const DBP_INDEX_TO_STAT = {
   7: "to",
 };
 
-export const ABBREVIATION_TO_TEAM = {
+const ABBREVIATION_TO_TEAM = {
   ATL: "Atlanta Hawks",
   BOS: "Boston Celtics",
   BRK: "Brooklyn Nets",
@@ -54,7 +54,7 @@ export const ABBREVIATION_TO_TEAM = {
   WAS: "Washington Wizards",
 };
 
-export const TEAM_TO_ABBREVIATION = {
+const TEAM_TO_ABBREVIATION = {
   "Atlanta Hawks": "ATL",
   "Boston Celtics": "BOS",
   "Brooklyn Nets": "BRK",
@@ -85,4 +85,11 @@ export const TEAM_TO_ABBREVIATION = {
   "Toronto Raptors": "TOR",
   "Utah Jazz": "UTA",
   "Washington Wizards": "WAS",
+};
+
+module.exports = {
+  PBP_PLAYER_DATA,
+  DBP_INDEX_TO_STAT,
+  ABBREVIATION_TO_TEAM,
+  TEAM_TO_ABBREVIATION,
 };

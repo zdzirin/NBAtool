@@ -1,18 +1,20 @@
 // Express import and settings
-import express from "express";
-import cors from "cors";
+const express = require("express");
+const cors = require("cors");
+const path = require("path");
 const app = express();
-app.use(cors());
 const port = 1738;
+app.use(cors());
+app.use(express.static(path.join(__dirname, "nbatool_client/build")));
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("NBAtool Backend created by ZadaZiri");
 });
 
 // Rosters
-import { getPBPRosterByTeam } from "./api/pbproster.js";
+const { getPBPRosterByTeam } = require("./api/pbproster.js");
 
-app.get("/pbp_roster/:team", (req, res) => {
+app.get("/api/pbp_roster/:team", (req, res) => {
   getPBPRosterByTeam(req.params.team)
     .then((roster) => res.json(roster))
     .catch((e) => {
@@ -24,9 +26,9 @@ app.get("/pbp_roster/:team", (req, res) => {
 });
 
 // Defense
-import { getDBPByTeam } from "./api/defensebyposition.js";
+const { getDBPByTeam } = require("./api/defensebyposition.js");
 
-app.get("/dbp_stats/:team", (req, res) => {
+app.get("/api/dbp_stats/:team", (req, res) => {
   getDBPByTeam(req.params.team)
     .then((stats) => {
       res.json(stats);
@@ -37,6 +39,10 @@ app.get("/dbp_stats/:team", (req, res) => {
         error: `There was an error fetching play by play roster for team ${req.params.team}`,
       });
     });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/nbatool_client/build/index.html"));
 });
 
 app.listen(port, () => {
