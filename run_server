@@ -1,0 +1,11 @@
+#!/bin/bash
+
+yarn # Install dependencies
+
+# Build React client for serving by node.js server
+cd nbatool_client
+yarn 
+yarn build 
+
+cd ..
+node server.js
