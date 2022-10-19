@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 
 async function getPBPRosterByTeam(team) {
-  const url = `https://widgets.sports-reference.com/wg.fcgi?css=1&site=bbr&url=%2Fteams%2F${team}%2F2022.html&div=div_pbp`;
+  const url = `https://widgets.sports-reference.com/wg.fcgi?css=1&site=bbr&url=%2Fteams%2F${team}%2F2023.html&div=div_pbp`;
   let players = [];
 
   // Fetch table from bball reference
