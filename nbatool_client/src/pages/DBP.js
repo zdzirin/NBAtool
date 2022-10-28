@@ -7,7 +7,7 @@ import logo from "../images/bet.png";
 const teams = Object.keys(ABBREVIATION_TO_TEAM);
 
 export default function DBP() {
-  const [selectedTeams, setSelectedTeams] = useState(teams);
+  const [selectedTeams, setSelectedTeams] = useState([]);
 
   return (
     <div className={main_styles.container}>
