@@ -19,7 +19,7 @@ export default function Home(props) {
   );
 }
 
-const HomeHeader = (props) => {
+export const HomeHeader = (props) => {
   return (
     <div className={styles.header}>
       <div className={styles.title}>
