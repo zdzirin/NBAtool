@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ABBREVIATION_TO_TEAM } from "../consts";
+import { Button, ButtonGroup, Card } from "@blueprintjs/core";
 import styles from "./styles/dbpstats.module.css";
 
 export default function DBPStats(props) {
@@ -31,12 +32,22 @@ export default function DBPStats(props) {
     <div className={styles.container}>
       <div className={styles.header}>
         <h3>{`${ABBREVIATION_TO_TEAM[props.team]} Defense vs Position`}</h3>
-        <div>
-          <p>Stat Range (Days):</p>
-          <button onClick={() => setRange(0)}>Season</button>
-          <button onClick={() => setRange(7)}>7</button>
-          <button onClick={() => setRange(15)}>15</button>
-          <button onClick={() => setRange(30)}>30</button>
+        <div style={{ display: "flex", marginBottom: 5 }}>
+          <p>Stat Range (Games):</p>
+          <ButtonGroup>
+            <Button active={range === 0} onClick={() => setRange(0)}>
+              Season
+            </Button>
+            <Button active={range === 7} onClick={() => setRange(7)}>
+              7
+            </Button>
+            <Button active={range === 15} onClick={() => setRange(15)}>
+              15
+            </Button>
+            <Button active={range === 30} onClick={() => setRange(30)}>
+              30
+            </Button>
+          </ButtonGroup>
         </div>
       </div>
       <table className={styles.table}>
