@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { ABBREVIATION_TO_TEAM } from "../consts";
+
+import { Select2 } from "@blueprintjs/select";
+
 import PBPRoster from "../components/PBPRoster";
 import DBPStats from "../components/DBPStats";
 
@@ -23,34 +26,44 @@ export const HomeHeader = (props) => {
   return (
     <div className={styles.header}>
       <div className={styles.title}>
-        <img src={logo} width={64} height={64} />
+        <img src={logo} alt="nbatool logo" width={64} height={64} />
         <h1>NBA Matchup Research Tool</h1>
       </div>
       <div className={styles.selectRow}>
         <div>
           <label for="team1">Team 1:</label>
-          <select name="team1" onChange={(e) => props.setTeam1(e.target.value)}>
-            <option key={0} value={null}>
-              None
-            </option>
-            {Object.keys(ABBREVIATION_TO_TEAM).map((el) => (
-              <option key={el} value={el}>
-                {ABBREVIATION_TO_TEAM[el]}
+          <div class="bp4-html-select">
+            <select
+              name="team1"
+              onChange={(e) => props.setTeam1(e.target.value)}
+            >
+              <option key={0} value={null}>
+                None
               </option>
-            ))}
-          </select>
+              {Object.keys(ABBREVIATION_TO_TEAM).map((el) => (
+                <option key={el} value={el}>
+                  {ABBREVIATION_TO_TEAM[el]}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <p>vs.</p>
+        <strong>vs.</strong>
         <div>
           <label for="team2">Team 2:</label>
-          <select name="team2" onChange={(e) => props.setTeam2(e.target.value)}>
-            <option key={0} value={null}>
-              None
-            </option>
-            {Object.keys(ABBREVIATION_TO_TEAM).map((el) => (
-              <option value={el}>{ABBREVIATION_TO_TEAM[el]}</option>
-            ))}
-          </select>
+          <div class="bp4-html-select">
+            <select
+              name="team2"
+              onChange={(e) => props.setTeam2(e.target.value)}
+            >
+              <option key={0} value={null}>
+                None
+              </option>
+              {Object.keys(ABBREVIATION_TO_TEAM).map((el) => (
+                <option value={el}>{ABBREVIATION_TO_TEAM[el]}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
     </div>

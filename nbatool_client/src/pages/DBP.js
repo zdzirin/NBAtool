@@ -4,6 +4,7 @@ import { ABBREVIATION_TO_TEAM } from "../consts";
 import main_styles from "./styles/home.module.css";
 
 import logo from "../images/bet.png";
+import { Button } from "@blueprintjs/core";
 const teams = Object.keys(ABBREVIATION_TO_TEAM);
 
 export default function DBP() {
@@ -80,15 +81,15 @@ const TeamButtons = ({ selectedTeams, setSelectedTeams }) => {
         }
 
         return (
-          <button
+          <Button
+            active={isSelected}
             onClick={() => {
-              console.log(team);
               onClick();
             }}
             style={{ marginLeft: 5, marginBottom: 5 }}
           >
             {team}
-          </button>
+          </Button>
         );
       })}
     </div>

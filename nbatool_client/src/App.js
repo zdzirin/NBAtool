@@ -3,6 +3,8 @@ import Home from "./pages/Home";
 import DBP from "./pages/DBP";
 
 import { useState } from "react";
+import { Button } from "@blueprintjs/core";
+
 function App() {
   const [dbpMode, setDbpMode] = useState(false);
 
@@ -11,11 +13,11 @@ function App() {
   return (
     <>
       <div style={{ marginTop: 20, marginLeft: 20 }}>
-        <button onClick={toggleDbpMode}>
+        <Button onClick={toggleDbpMode}>
           {dbpMode
             ? "Switch To Matchup Mode"
             : "Switch to (new!) Team DBP Mode"}
-        </button>
+        </Button>
       </div>
       {dbpMode ? <DBP /> : <Home />}
       <footer style={{ padding: 10, fontSize: 10 }}>
