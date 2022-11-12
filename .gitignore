@@ -4,6 +4,6 @@
 
 /dev
 
-*.lock
+
 *lock.json
 package-lock.json
