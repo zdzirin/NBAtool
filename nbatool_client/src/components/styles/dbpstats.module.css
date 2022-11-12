@@ -48,3 +48,7 @@
   border-bottom: 1px solid #bbbbbb;
   height: 51.5px;
 }
+
+.table tr td {
+  border-left: 1px solid #bbbbbb;
+}
