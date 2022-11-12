@@ -1,10 +1,26 @@
 import { useState } from "react";
-import { ABBREVIATION_TO_TEAM } from "../consts";
+import { ABBREVIATION_TO_TEAM, colors } from "../consts";
 import { Button, ButtonGroup } from "@blueprintjs/core";
 import styles from "./styles/dbpstats.module.css";
-import { val } from "cheerio/lib/api/attributes";
 
+const DBP_INDEX_TO_STAT = {
+  0: "position",
+  1: "pts",
+  2: "reb",
+  3: "ast",
+  4: "tpm",
+  5: "stl",
+  6: "blk",
+  7: "to",
+};
+
+const POSITIONS = ["PG", "SG", "SF", "PF", "C", "TM"];
 export default function DBPStats({ team, stats }) {
+  // Sorts the stats in the order defined above
+  stats.sort(
+    (a, b) => POSITIONS.indexOf(a.position) - POSITIONS.indexOf(b.position)
+  );
+
   const [range, setRange] = useState(0);
 
   return (
@@ -56,14 +72,33 @@ export default function DBPStats({ team, stats }) {
                     }
                     let color =
                       value.difficulty > 0
-                        ? "coral"
+                        ? colors.yellow_orange
                         : value.difficulty < 0
-                        ? "green"
-                        : "black";
+                        ? colors.green
+                        : "";
                     return (
-                      <td style={{ color }}>
-                        {value.amt}
-                        <br />({value.rank})
+                      <td
+                        style={{
+                          position: "relative",
+                          borderTop:
+                            value.difficulty !== 0 && "3px solid " + color,
+                        }}
+                      >
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            opacity: 0.25,
+                            backgroundColor: value.difficulty !== 0 && color,
+                          }}
+                        />
+                        <div style={{ position: "relative", zIndex: 2 }}>
+                          {value.amt}
+                          <br />({value.rank})
+                        </div>
                       </td>
                     );
                   })}
@@ -77,14 +112,3 @@ export default function DBPStats({ team, stats }) {
 }
 
 function getRowDataFromElement(e) {}
-
-const DBP_INDEX_TO_STAT = {
-  0: "position",
-  1: "pts",
-  2: "reb",
-  3: "ast",
-  4: "tpm",
-  5: "stl",
-  6: "blk",
-  7: "to",
-};

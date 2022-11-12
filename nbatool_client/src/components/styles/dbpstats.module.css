@@ -45,8 +45,11 @@
 }
 
 .table tr {
-  border-bottom: 1px solid #bbbbbb;
   height: 51.5px;
+}
+
+.table thead tr {
+  height: 40px;
 }
 
 .table tr td {

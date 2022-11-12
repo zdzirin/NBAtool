@@ -34,7 +34,7 @@ function App() {
 
     Object.keys(DBPData).forEach((range) => {
       Object.keys(DBPData[range]).forEach((position) => {
-        if (position === "all") return;
+        if (position === "ALL") return;
 
         const data = DBPData[range][position].find((e) => e.team === team);
         if (!data) {
