@@ -13,7 +13,6 @@ export default function PBPRoster(props) {
     fetch(URL)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setRosterIsSet(true);
         setRoster(data);
       })

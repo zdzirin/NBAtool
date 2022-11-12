@@ -26,7 +26,20 @@ app.get("/api/pbp_roster/:team", (req, res) => {
 });
 
 // Defense
-const { getDBPByTeam } = require("./api/defensebyposition.js");
+const { getDBPByTeam, getDBPFull } = require("./api/defensebyposition.js");
+
+app.get("/api/full_dbp_stats", (req, res) => {
+  getDBPFull()
+    .then((stats) => {
+      res.json(stats);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.json({
+        error: `There was an error fetching full dbp data`,
+      });
+    });
+});
 
 app.get("/api/dbp_stats/:team", (req, res) => {
   getDBPByTeam(req.params.team)
@@ -36,7 +49,7 @@ app.get("/api/dbp_stats/:team", (req, res) => {
     .catch((e) => {
       console.log(e);
       res.json({
-        error: `There was an error fetching play by play roster for team ${req.params.team}`,
+        error: `There was an error fetching dbp roster for team ${req.params.team}`,
       });
     });
 });

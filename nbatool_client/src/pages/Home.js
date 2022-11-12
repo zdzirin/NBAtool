@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { ABBREVIATION_TO_TEAM } from "../consts";
 
-import { Select2 } from "@blueprintjs/select";
-
 import PBPRoster from "../components/PBPRoster";
 import DBPStats from "../components/DBPStats";
 
-import logo from "../images/bet.png";
+import logo from "../images/nbatool-logo.svg";
 import styles from "./styles/home.module.css";
 
 export default function Home(props) {
@@ -16,8 +14,16 @@ export default function Home(props) {
   return (
     <div className={styles.container}>
       <HomeHeader setTeam1={setTeam1} setTeam2={setTeam2} />
-      <Matchup team1={team1} team2={team2} />
-      <Matchup team1={team2} team2={team1} />
+      <Matchup
+        team1={team1}
+        team2={team2}
+        getTeamDBPData={props.getTeamDBPData}
+      />
+      <Matchup
+        team1={team2}
+        team2={team1}
+        getTeamDBPData={props.getTeamDBPData}
+      />
     </div>
   );
 }
@@ -84,7 +90,10 @@ const Matchup = (props) => {
         </div>
         <div className={styles.spacer}></div>
         <div className={styles.tableContainer}>
-          <DBPStats team={props.team2} />
+          <DBPStats
+            team={props.team2}
+            stats={props.getTeamDBPData(props.team2)}
+          />
         </div>
       </div>
     </>

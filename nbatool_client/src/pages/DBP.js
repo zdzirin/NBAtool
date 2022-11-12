@@ -3,11 +3,11 @@ import DBPStats from "../components/DBPStats";
 import { ABBREVIATION_TO_TEAM } from "../consts";
 import main_styles from "./styles/home.module.css";
 
-import logo from "../images/bet.png";
+import logo from "../images/nbatool-logo.svg";
 import { Button } from "@blueprintjs/core";
 const teams = Object.keys(ABBREVIATION_TO_TEAM);
 
-export default function DBP() {
+export default function DBP({ getTeamDBPData }) {
   const [selectedTeams, setSelectedTeams] = useState([]);
 
   return (
@@ -39,7 +39,7 @@ export default function DBP() {
               margin: "auto",
             }}
           >
-            <DBPStats team={team} />
+            <DBPStats stats={getTeamDBPData(team)} team={team} />
           </div>
         ))}
       </div>

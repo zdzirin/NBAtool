@@ -1,37 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ABBREVIATION_TO_TEAM } from "../consts";
-import { Button, ButtonGroup, Card } from "@blueprintjs/core";
+import { Button, ButtonGroup } from "@blueprintjs/core";
 import styles from "./styles/dbpstats.module.css";
+import { val } from "cheerio/lib/api/attributes";
 
-export default function DBPStats(props) {
-  const URL = `/api/dbp_stats/${props.team}`;
-  const [stats, setStats] = useState([]);
-  const [statsSet, setStatsSet] = useState(false);
+export default function DBPStats({ team, stats }) {
   const [range, setRange] = useState(0);
 
-  useEffect(() => {
-    if (statsSet) return;
-    fetch(URL)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setStatsSet(true);
-        setStats(data);
-      })
-      .catch((e) => {
-        console.log(e);
-        setStatsSet(true);
-      });
-  }, [statsSet]);
-
-  useEffect(() => setStatsSet(false), [props.team]);
-
-  return !statsSet ? (
-    <p>Defense By Position Stats Pending...</p>
-  ) : (
+  return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h3>{`${ABBREVIATION_TO_TEAM[props.team]} Defense vs Position`}</h3>
+        <h3>{`${ABBREVIATION_TO_TEAM[team]} Defense vs Position`}</h3>
         <div style={{ display: "flex", marginBottom: 5 }}>
           <p>Stat Range (Games):</p>
           <ButtonGroup>
@@ -81,7 +60,12 @@ export default function DBPStats(props) {
                         : value.difficulty < 0
                         ? "green"
                         : "black";
-                    return <td style={{ color }}>{value.amt}</td>;
+                    return (
+                      <td style={{ color }}>
+                        {value.amt}
+                        <br />({value.rank})
+                      </td>
+                    );
                   })}
                 </tr>
               );
