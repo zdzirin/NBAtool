@@ -49,7 +49,17 @@ function App() {
     return teamData;
   };
 
-  return (
+  return loading ? (
+    <h1>NBATool is loading!</h1>
+  ) : error ? (
+    <>
+      <h1>NBATool couldn't load! D:</h1>
+      <p>
+        Try refreshing <br /> or coming back in a couple minutes <br /> if that
+        doesn't work... uh oh{" "}
+      </p>
+    </>
+  ) : (
     <>
       <div style={{ marginTop: 20, marginLeft: 20 }}>
         <Button onClick={toggleDbpMode}>
