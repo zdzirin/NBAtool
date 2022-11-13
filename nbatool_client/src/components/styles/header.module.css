@@ -8,6 +8,7 @@
 .title {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   margin-bottom: 20px;
   color: #e7e0da;
 }

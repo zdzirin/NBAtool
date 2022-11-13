@@ -21,7 +21,8 @@ export const Header = ({ page, pages, setPage }) => {
           }
           onClick={() => setHide(false)}
           style={{
-            maxWidth: 86,
+            width: 85,
+            height: 85,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -45,7 +46,8 @@ export const Header = ({ page, pages, setPage }) => {
           }
           onClick={() => setHide(true)}
           style={{
-            maxWidth: 86,
+            width: 85,
+            height: 85,
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -54,7 +56,7 @@ export const Header = ({ page, pages, setPage }) => {
           }}
         />
         <div>
-          <h1 style={{ marginBottom: 0 }}>NBAtool</h1>
+          <h1 style={{ margin: 0 }}>NBAtool</h1>
           <div>
             Giving you quick access to play-by-play positional statistics, and
             team defensive data by position to predict any NBA matchup.{" "}
