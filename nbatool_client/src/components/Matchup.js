@@ -34,12 +34,12 @@ export const Matchup = ({ remove }) => {
       >
         <TeamSelect
           value={teamA}
-          onChange={(e) => setTeamA(e.value)}
+          onChange={(e) => setTeamA(e)}
           style={{ marginRight: 5 }}
         />
         <TeamSelect
           value={teamB}
-          onChange={(e) => setTeamB(e.value)}
+          onChange={(e) => setTeamB(e)}
           style={{ marginLeft: 5 }}
         />
       </div>
