@@ -1,0 +1,13 @@
+.header {
+  width: fit-content;
+  max-width: 711px;
+  padding: 16px;
+  margin-bottom: 10px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  color: #e7e0da;
+}

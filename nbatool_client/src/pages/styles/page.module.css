@@ -1,0 +1,28 @@
+.container {
+  margin-bottom: 20px;
+  color: #e7e0da;
+}
+
+.dbp_list_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.dbp_list_container > div {
+  width: 90%;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+@media screen and (min-width: 650px) {
+  .dbp_list_container > div {
+    width: 44%;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .dbp_list_container > div {
+    width: 21%;
+  }
+}

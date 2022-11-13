@@ -4,7 +4,8 @@ import { ABBREVIATION_TO_TEAM } from "../consts";
 import main_styles from "./styles/home.module.css";
 
 import logo from "../images/nbatool-logo.svg";
-import { Button } from "@blueprintjs/core";
+import { Skeuobutton } from "../components/SkeuoElements";
+
 const teams = Object.keys(ABBREVIATION_TO_TEAM);
 
 export default function DBP({ getTeamDBPData }) {
@@ -17,7 +18,7 @@ export default function DBP({ getTeamDBPData }) {
           <img src={logo} width={64} height={64} />
           <h1>NBA Matchup Research Tool</h1>
         </div>
-        <TeamButtons
+        <TeamSkeuobuttons
           selectedTeams={selectedTeams}
           setSelectedTeams={setSelectedTeams}
         />
@@ -47,7 +48,7 @@ export default function DBP({ getTeamDBPData }) {
   );
 }
 
-const TeamButtons = ({ selectedTeams, setSelectedTeams }) => {
+const TeamSkeuobuttons = ({ selectedTeams, setSelectedTeams }) => {
   const addSelectedTeam = (team) => {
     const newSelectedTeams = [...selectedTeams, team];
     setSelectedTeams(newSelectedTeams);
@@ -81,7 +82,7 @@ const TeamButtons = ({ selectedTeams, setSelectedTeams }) => {
         }
 
         return (
-          <Button
+          <Skeuobutton
             active={isSelected}
             onClick={() => {
               onClick();
@@ -89,7 +90,7 @@ const TeamButtons = ({ selectedTeams, setSelectedTeams }) => {
             style={{ marginLeft: 5, marginBottom: 5 }}
           >
             {team}
-          </Button>
+          </Skeuobutton>
         );
       })}
     </div>
