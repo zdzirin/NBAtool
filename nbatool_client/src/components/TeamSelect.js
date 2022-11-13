@@ -22,6 +22,7 @@ export const TeamSelect = ({
         placeholder="Select Team"
         onChange={onChange}
         multiple={multi}
+        search={!multi}
         onFocus={() => console.log("focus")}
       />
     </div>
