@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { DBPContextProvider } from "./context/DBPContext";
 import "./index.css";
-import App from "./App";
+import App from "./NBAtool";
 //import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <DBPContextProvider>
+      <App />
+    </DBPContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

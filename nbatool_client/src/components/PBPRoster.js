@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { ABBREVIATION_TO_TEAM, colors } from "../consts";
+
 import styles from "./styles/pbrroster.module.css";
+import skeuo from "./styles/skeuomorphism.module.css";
 
 const POSITION_TO_PCT = {
   PG: "pct_1",
@@ -10,8 +12,8 @@ const POSITION_TO_PCT = {
   C: "pct_5",
 };
 
-export default function PBPRoster(props) {
-  const URL = `/api/pbp_roster/${props.team}`;
+export default function PBPRoster({ team, constrain = false }) {
+  const URL = `/api/pbp_roster/${team}`;
   const [roster, setRoster] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState("");
 
@@ -41,21 +43,32 @@ export default function PBPRoster(props) {
       });
   }, [rosterIsSet]);
 
-  useEffect(() => setRosterIsSet(false), [props.team]);
+  useEffect(() => setRosterIsSet(false), [team]);
 
   return !rosterIsSet ? (
     <p>Roster Pending...</p>
   ) : (
     <div className={styles.container}>
-      <h3>{`${
-        ABBREVIATION_TO_TEAM[props.team]
-      } Play By Play Roster: ${selectedPosition}`}</h3>
+      <h3>{`${ABBREVIATION_TO_TEAM[team]} Play By Play Roster: ${selectedPosition}`}</h3>
       <table className={styles.table}>
-        <thead>
-          <tr className={`${styles.tableRow} ${styles.headerRow}`}>
+        <thead
+          style={{
+            display: constrain && !(window.innerWidth < 1065) && "block",
+            paddingRight: constrain && !(window.innerWidth < 1065) && 15,
+          }}
+        >
+          <tr
+            className={`${styles.tableRow} ${styles.headerRow} ${
+              skeuo.skeuoshadow
+            } ${
+              constrain &&
+              !(window.innerWidth < 1065) &&
+              styles.constrain_header
+            }`}
+          >
             <td>Player</td>
-            <td>Games</td>
-            <td>Minutes</td>
+            <td>GP</td>
+            <td>Mins</td>
             {["PG", "SG", "SF", "PF", "C"].map((pos) => (
               <td
                 style={{
@@ -72,7 +85,13 @@ export default function PBPRoster(props) {
             <td className={styles.hide}>Net +/-</td>
           </tr>
         </thead>
-        <tbody>{createTableBodyFromRoster(roster, selectedPosition)}</tbody>
+        <tbody
+          className={
+            constrain && !(window.innerWidth < 1065) && styles.constrain
+          }
+        >
+          {createTableBodyFromRoster(roster, selectedPosition)}
+        </tbody>
       </table>
     </div>
   );
@@ -120,14 +139,12 @@ function createTableDataFromField(field, value) {
         </a>
       </td>
     );
-  } else if (["pct_2", "pct_3", "pct_4"].includes(field)) {
-    return field !== "pct_4" ? (
-      <td style={{ borderLeft: "1px solid #bbbbbb" }}>{value}</td>
-    ) : (
+  } else if (["pct_2", "pct_4"].includes(field)) {
+    return (
       <td
         style={{
-          borderLeft: "1px solid #bbbbbb",
-          borderRight: "1px solid #bbbbbb",
+          borderLeft: "0.5px solid #e7e0da",
+          borderRight: "0.5px solid #e7e0da",
         }}
       >
         {value}
@@ -142,8 +159,17 @@ function createTableDataFromField(field, value) {
             : ""
         }
       >
-        {value}
+        {trumPlusMinusValue(value)}
       </td>
     );
   }
 }
+
+const trumPlusMinusValue = (value) => {
+  value = `${value}`;
+  value = value.substring(0, 4);
+  if (value[3] === ".") {
+    value = value.substring(0, 3);
+  }
+  return value;
+};

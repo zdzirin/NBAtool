@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useDBPData } from "../context/DBPContext";
+
+import { Skeuobutton } from "./SkeuoElements";
+
 import { ABBREVIATION_TO_TEAM, colors } from "../consts";
-import { Button, ButtonGroup } from "@blueprintjs/core";
 import styles from "./styles/dbpstats.module.css";
+import skeuo from "./styles/skeuomorphism.module.css";
 
 const DBP_INDEX_TO_STAT = {
   0: "position",
@@ -15,7 +19,11 @@ const DBP_INDEX_TO_STAT = {
 };
 
 const POSITIONS = ["PG", "SG", "SF", "PF", "C", "TM"];
-export default function DBPStats({ team, stats }) {
+export default function DBPStats({ team }) {
+  const getTeamDBPData = useDBPData();
+
+  const stats = getTeamDBPData(team);
+
   // Sorts the stats in the order defined above
   stats.sort(
     (a, b) => POSITIONS.indexOf(a.position) - POSITIONS.indexOf(b.position)
@@ -26,29 +34,37 @@ export default function DBPStats({ team, stats }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h3>{`${ABBREVIATION_TO_TEAM[team]} Defense vs Position`}</h3>
-        <div style={{ display: "flex", marginBottom: 5 }}>
-          <p>Stat Range (Games):</p>
-          <ButtonGroup>
-            <Button active={range === 0} onClick={() => setRange(0)}>
-              Season
-            </Button>
-            <Button active={range === 7} onClick={() => setRange(7)}>
-              7
-            </Button>
-            <Button active={range === 15} onClick={() => setRange(15)}>
-              15
-            </Button>
-            <Button active={range === 30} onClick={() => setRange(30)}>
-              30
-            </Button>
-          </ButtonGroup>
+        <h3
+          style={{ marginBottom: 10 }}
+        >{`${ABBREVIATION_TO_TEAM[team]} Defense vs Position`}</h3>
+        <div style={{ display: "flex", width: "100%", marginBottom: 20 }}>
+          <p style={{ margin: 0 }}>Stat Range (Games):</p>
+          <Skeuobutton
+            active={range === 0}
+            onClick={() => setRange(0)}
+            text="Season"
+          />
+          <Skeuobutton
+            active={range === 7}
+            onClick={() => setRange(7)}
+            text="7"
+          />
+          <Skeuobutton
+            active={range === 15}
+            onClick={() => setRange(15)}
+            text="15"
+          />
+          <Skeuobutton
+            active={range === 30}
+            onClick={() => setRange(30)}
+            text="30"
+          />
         </div>
       </div>
       <table className={styles.table}>
-        <thead>
+        <thead className={skeuo.skeuoshadow}>
           <tr>
-            <th>Position</th>
+            <th>Pos.</th>
             <th>PTS</th>
             <th>REB</th>
             <th>AST</th>

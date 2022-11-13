@@ -4,20 +4,7 @@
   padding: 1%;
   box-sizing: border-box;
   min-height: 95%;
-}
-
-.header {
-  border-bottom: 1px solid #bbbbbb;
-  padding-bottom: 16px;
-}
-
-.title {
-  display: flex;
-  flex-direction: row;
-}
-
-.title img {
-  margin-right: 10px;
+  color: #fff;
 }
 
 .matchup {

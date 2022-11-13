@@ -35,6 +35,6 @@ export const colors = {
   logo_pale: "#D0B9AC",
   logo_brown: "#553D38",
   logo_orange: "#D54F42",
-  green: "#537E3A",
+  green: "#0B6E4F",
   yellow_orange: "#E6A340",
 };
