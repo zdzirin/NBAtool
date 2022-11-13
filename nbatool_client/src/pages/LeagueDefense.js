@@ -5,6 +5,7 @@ import DBPStats from "../components/DBPStats";
 
 import page from "./styles/page.module.css";
 import { ABBREVIATION_TO_TEAM } from "../consts";
+import { TeamSelect } from "../components/TeamSelect";
 
 /*
 const TEAM_SELECT_DATA = Object.keys(ABBREVIATION_TO_TEAM).map((abbr) => {
@@ -35,11 +36,28 @@ export const LeagueDefense = () => {
 
   return (
     <div className={page.container}>
-      <h3 style={{ marginBottom: 10 }}>League Defenses:</h3>
       <div
         style={{
           display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+      >
+        <h3 style={{ marginBottom: 10, width: "50%" }}>League Defenses:</h3>
+        <TeamSelect
+          value={selectedTeams}
+          onChange={(e) => setSelectedTeams(e)}
+          multi
+          style={{ width: 300 }}
+        />
+      </div>
+      <SkeuoboxDark
+        style={{
+          display: "flex",
           width: "100%",
+          boxSizing: "border-box",
           flexFlow: "row wrap",
           justifyContent: "space-around",
           marginBottom: 20,
@@ -67,7 +85,8 @@ export const LeagueDefense = () => {
             }
           />
         ))}
-      </div>
+      </SkeuoboxDark>
+
       <div className={page.dbp_list_container}>
         {selectedTeams.map((team) => (
           <SkeuoboxDark>
