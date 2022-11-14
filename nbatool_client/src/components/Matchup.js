@@ -12,7 +12,7 @@ export const Matchup = ({ remove }) => {
   const [teamB, setTeamB] = useState("");
 
   return (
-    <SkeuoboxDark style={{ marginBottom: 10 }}>
+    <SkeuoboxDark style={{ marginBottom: 20 }}>
       <div
         style={{
           display: "flex",
@@ -21,15 +21,15 @@ export const Matchup = ({ remove }) => {
           marginBottom: 20,
         }}
       >
-        <h2 style={{ margin: "0px 0px 10px" }}>Matchup:</h2>
+        <h2 style={{ margin: "0px 0px 10px" }}>Matchup</h2>
         <Skeuobutton text="Remove Matchup" onClick={remove} />
       </div>
       <div
         style={{
           display: "flex",
-          justifyContent: "space-evenly",
+          justifyContent: "space-around",
           width: "100%",
-          marginBottom: 10,
+          marginBottom: 30,
         }}
       >
         <TeamSelect

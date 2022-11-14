@@ -49,7 +49,9 @@ export default function PBPRoster({ team, constrain = false }) {
     <p>Roster Pending...</p>
   ) : (
     <div className={styles.container}>
-      <h3>{`${ABBREVIATION_TO_TEAM[team]} Play By Play Roster: ${selectedPosition}`}</h3>
+      <h3
+        style={{ marginBottom: 20 }}
+      >{`${ABBREVIATION_TO_TEAM[team]} Play By Play Roster`}</h3>
       <table className={styles.table}>
         <thead
           style={{
@@ -102,17 +104,26 @@ function createTableBodyFromRoster(roster, selectedPosition) {
   roster.forEach((player) => {
     let fields = Object.keys(player);
 
-    let hasPlayedPosition = false;
+    let color = false;
     if (!!selectedPosition) {
-      hasPlayedPosition =
-        parseInt(player[POSITION_TO_PCT[selectedPosition]]) > 10;
+      const minutesPlayed = parseInt(player[POSITION_TO_PCT[selectedPosition]]);
+      if (minutesPlayed > 0) {
+        color = colors.logo_orange;
+      }
+      if (minutesPlayed >= 10) {
+        color = colors.yellow_orange;
+      }
+      if (minutesPlayed >= 33) {
+        color = colors.green;
+      }
     }
+
     table.push(
       <tr
         className={styles.tableRow}
         style={{
-          background: hasPlayedPosition && `${colors.green}40`,
-          borderTop: hasPlayedPosition && `2px solid ${colors.green}`,
+          background: !!color && `${color}40`,
+          borderTop: !!color && `2px solid ${color}`,
         }}
       >
         {fields.map((field) => createTableDataFromField(field, player[field]))}

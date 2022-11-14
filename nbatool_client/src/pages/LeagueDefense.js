@@ -45,7 +45,7 @@ export const LeagueDefense = () => {
           marginBottom: 10,
         }}
       >
-        <h3 style={{ marginBottom: 10, width: "50%" }}>League Defenses:</h3>
+        <h3 style={{ marginBottom: 10, marginRight: 20 }}>League Defenses</h3>
         <TeamSelect
           value={selectedTeams}
           onChange={(e) => setSelectedTeams(e)}

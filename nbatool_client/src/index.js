@@ -5,7 +5,6 @@ import { DBPContextProvider } from "./context/DBPContext";
 import App from "./NBAtool";
 
 import "./index.css";
-import "react-select-search/style.css";
 import "./select.css";
 
 //import reportWebVitals from "./reportWebVitals";

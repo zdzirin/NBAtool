@@ -35,7 +35,7 @@ export default function DBPStats({ team }) {
     <div className={styles.container}>
       <div className={styles.header}>
         <h3
-          style={{ marginBottom: 10 }}
+          style={{ marginBottom: 20 }}
         >{`${ABBREVIATION_TO_TEAM[team]} Defense vs Position`}</h3>
         <div style={{ display: "flex", width: "100%", marginBottom: 20 }}>
           <p style={{ margin: 0 }}>Stat Range (Games):</p>
