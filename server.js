@@ -54,6 +54,23 @@ app.get("/api/dbp_stats/:team", (req, res) => {
     });
 });
 
+// Game Log
+const { getGameLogByPlayer } = require("./api/gamelogs.js");
+
+app.get("/api/gamelog/:player", (req, res) => {
+  getGameLogByPlayer(req.params.player)
+    .then((gamelog) => {
+      if (gamelog.hasOwnProperty("error")) throw new Error(gamelog.error);
+      res.json(gamelog);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.json({
+        error: `There was an error fetching game log for player ${req.params.player}`,
+      });
+    });
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/nbatool_client/build/index.html"));
 });

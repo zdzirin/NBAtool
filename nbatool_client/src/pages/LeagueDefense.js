@@ -7,12 +7,6 @@ import page from "./styles/page.module.css";
 import { ABBREVIATION_TO_TEAM } from "../consts";
 import { TeamSelect } from "../components/TeamSelect";
 
-/*
-const TEAM_SELECT_DATA = Object.keys(ABBREVIATION_TO_TEAM).map((abbr) => {
-  return { label: abbr, value: abbr };
-});
-*/
-
 const TEAMS = Object.keys(ABBREVIATION_TO_TEAM);
 
 export const LeagueDefense = () => {

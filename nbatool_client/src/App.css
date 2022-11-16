@@ -1,9 +1,5 @@
-body {
-  width: 100%;
-}
-
 #root {
-  width: 100%;
+  width: calc(100vw - 20px);
   padding: 10px;
   box-sizing: border-box;
 }

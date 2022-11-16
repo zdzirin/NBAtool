@@ -26,6 +26,7 @@
   color: #e7e0da;
 
   padding: 16px;
+  box-sizing: border-box;
 
   /* Skeuo Shadow 1 */
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5), 1px 1px 8px #000000,

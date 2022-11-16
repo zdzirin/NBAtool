@@ -2,42 +2,10 @@
   width: 100%;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse !important;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 14px;
-  text-align: center;
-  letter-spacing: -1px;
-  font-family: "Poppins", sans-serif;
-}
-
-.table tr:nth-child(even) {
-  background-color: #333333;
-}
-
-.table a {
-  color: #b0c7d0;
-  font-weight: 500;
-}
-
-.headerRow {
-  background-color: #211e1e;
-}
-
 .constrain_header {
   display: table;
   width: 100%;
   table-layout: fixed;
-}
-
-.headerRow * {
-  font-weight: 600;
-}
-
-.tableRow {
-  height: 44px;
 }
 
 table .constrain {

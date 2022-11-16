@@ -23,7 +23,6 @@ export const TeamSelect = ({
         onChange={onChange}
         multiple={multi}
         search={!multi}
-        onFocus={() => console.log("focus")}
       />
     </div>
   );

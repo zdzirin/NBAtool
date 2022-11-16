@@ -3,6 +3,7 @@ import { ABBREVIATION_TO_TEAM, colors } from "../consts";
 
 import styles from "./styles/pbrroster.module.css";
 import skeuo from "./styles/skeuomorphism.module.css";
+import table from "./styles/table.module.css";
 
 const POSITION_TO_PCT = {
   PG: "pct_1",
@@ -12,7 +13,11 @@ const POSITION_TO_PCT = {
   C: "pct_5",
 };
 
-export default function PBPRoster({ team, constrain = false }) {
+export default function PBPRoster({
+  team,
+  setSelectedPlayer = (player) => {},
+  constrain = false,
+}) {
   const URL = `/api/pbp_roster/${team}`;
   const [roster, setRoster] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState("");
@@ -52,7 +57,7 @@ export default function PBPRoster({ team, constrain = false }) {
       <h3
         style={{ marginBottom: 20 }}
       >{`${ABBREVIATION_TO_TEAM[team]} Play By Play Roster`}</h3>
-      <table className={styles.table}>
+      <table className={table.table}>
         <thead
           style={{
             display: constrain && !(window.innerWidth < 1065) && "block",
@@ -60,13 +65,11 @@ export default function PBPRoster({ team, constrain = false }) {
           }}
         >
           <tr
-            className={`${styles.tableRow} ${styles.headerRow} ${
-              skeuo.skeuoshadow
-            } ${
+            className={
               constrain &&
               !(window.innerWidth < 1065) &&
               styles.constrain_header
-            }`}
+            }
           >
             <td>Player</td>
             <td>GP</td>
@@ -92,17 +95,29 @@ export default function PBPRoster({ team, constrain = false }) {
             constrain && !(window.innerWidth < 1065) && styles.constrain
           }
         >
-          {createTableBodyFromRoster(roster, selectedPosition)}
+          {createTableBodyFromRoster(
+            roster,
+            selectedPosition,
+            setSelectedPlayer
+          )}
         </tbody>
       </table>
     </div>
   );
 }
 
-function createTableBodyFromRoster(roster, selectedPosition) {
+function createTableBodyFromRoster(
+  roster,
+  selectedPosition,
+  setSelectedPlayer
+) {
   let table = [];
   roster.forEach((player) => {
     let fields = Object.keys(player);
+    const playerID = player.g.link.split("/")[5];
+
+    const selectedPlayer = { name: player.player.name, id: playerID };
+    const onClick = () => setSelectedPlayer(selectedPlayer);
 
     let color = false;
     if (!!selectedPosition) {
@@ -120,20 +135,21 @@ function createTableBodyFromRoster(roster, selectedPosition) {
 
     table.push(
       <tr
-        className={styles.tableRow}
         style={{
           background: !!color && `${color}40`,
           borderTop: !!color && `2px solid ${color}`,
         }}
       >
-        {fields.map((field) => createTableDataFromField(field, player[field]))}
+        {fields.map((field) =>
+          createTableDataFromField(field, player[field], onClick)
+        )}
       </tr>
     );
   });
   return table;
 }
 
-function createTableDataFromField(field, value) {
+function createTableDataFromField(field, value, onClick) {
   if (field === "player") {
     return (
       <td style={{ textDecoration: "underline" }}>
@@ -144,10 +160,8 @@ function createTableDataFromField(field, value) {
     );
   } else if (field === "g") {
     return (
-      <td>
-        <a href={value.link} target="_blank" rel="noreferrer">
-          {value.name}
-        </a>
+      <td onClick={onClick} style={{ textDecoration: "underline" }}>
+        {value.name}!
       </td>
     );
   } else if (["pct_2", "pct_4"].includes(field)) {

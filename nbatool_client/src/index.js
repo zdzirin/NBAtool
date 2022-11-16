@@ -6,13 +6,16 @@ import App from "./NBAtool";
 
 import "./index.css";
 import "./select.css";
+import { GamelogContextProvider } from "./context/GamelogContext";
 
 //import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
     <DBPContextProvider>
-      <App />
+      <GamelogContextProvider>
+        <App />
+      </GamelogContextProvider>
     </DBPContextProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -6,13 +6,25 @@ import DBPStats from "./DBPStats";
 
 import { SkeuoboxDark, Skeuobutton } from "./SkeuoElements";
 import styles from "./styles/matchup.module.css";
+import { Modal } from "./Modal";
+import { Gamelog } from "./Gamelog";
 
 export const Matchup = ({ remove }) => {
   const [teamA, setTeamA] = useState("");
   const [teamB, setTeamB] = useState("");
+  const [selectedPlayer, setSelectedPlayer] = useState({});
 
   return (
     <SkeuoboxDark style={{ marginBottom: 20 }}>
+      {selectedPlayer.hasOwnProperty("id") && (
+        <Modal>
+          <Gamelog
+            id={selectedPlayer.id}
+            name={selectedPlayer.name}
+            closeModal={() => setSelectedPlayer({})}
+          />
+        </Modal>
+      )}
       <div
         style={{
           display: "flex",
@@ -45,7 +57,13 @@ export const Matchup = ({ remove }) => {
       </div>
       <div className={styles.side_by_side_container}>
         <SkeuoboxDark>
-          {!!teamA && !!teamB && <PBPRoster team={teamA} constrain />}
+          {!!teamA && !!teamB && (
+            <PBPRoster
+              team={teamA}
+              setSelectedPlayer={setSelectedPlayer}
+              constrain
+            />
+          )}
         </SkeuoboxDark>
         <SkeuoboxDark>
           {!!teamA && !!teamB && <DBPStats team={teamB} />}
@@ -53,7 +71,13 @@ export const Matchup = ({ remove }) => {
       </div>
       <div className={styles.side_by_side_container}>
         <SkeuoboxDark>
-          {!!teamA && !!teamB && <PBPRoster team={teamB} constrain />}
+          {!!teamA && !!teamB && (
+            <PBPRoster
+              team={teamB}
+              setSelectedPlayer={setSelectedPlayer}
+              constrain
+            />
+          )}
         </SkeuoboxDark>
         <SkeuoboxDark>
           {!!teamA && !!teamB && <DBPStats team={teamA} />}

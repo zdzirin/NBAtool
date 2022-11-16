@@ -1,0 +1,17 @@
+.container {
+  width: calc(100% - 20px);
+}
+
+.container div {
+  max-width: 100%;
+}
+
+.container .table {
+  overflow-x: scroll;
+}
+
+.prop_select {
+  margin: 10px 0px 20px;
+  display: flex;
+  flex-flow: row wrap;
+}

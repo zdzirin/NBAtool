@@ -5,6 +5,8 @@ import { Header } from "./components/Header";
 import "./App.css";
 import { Matchups } from "./pages/Matchups";
 import { LeagueDefense } from "./pages/LeagueDefense";
+import { Modal } from "./components/Modal";
+import { Gamelog } from "./components/Gamelog";
 
 const PAGES = ["Matchups", "League Defenses"];
 function App() {
@@ -14,6 +16,9 @@ function App() {
       <Header pages={PAGES} page={page} setPage={setPage} />
       {page === "Matchups" && <Matchups />}
       {page === "League Defenses" && <LeagueDefense />}
+      {/* <Modal>
+        <Gamelog id={"paulch01"} name="Keldon Johnson" />
+      </Modal> */}
       <footer style={{ fontSize: 10, color: "#fff" }}>
         <div>
           Position Data Provided By{" "}

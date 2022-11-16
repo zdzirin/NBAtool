@@ -4,8 +4,10 @@ import { useDBPData } from "../context/DBPContext";
 import { Skeuobutton } from "./SkeuoElements";
 
 import { ABBREVIATION_TO_TEAM, colors } from "../consts";
+
 import styles from "./styles/dbpstats.module.css";
 import skeuo from "./styles/skeuomorphism.module.css";
+import table from "./styles/table.module.css";
 
 const DBP_INDEX_TO_STAT = {
   0: "position",
@@ -61,7 +63,7 @@ export default function DBPStats({ team }) {
           />
         </div>
       </div>
-      <table className={styles.table}>
+      <table className={table.table + " " + table.dbp}>
         <thead className={skeuo.skeuoshadow}>
           <tr>
             <th>Pos.</th>

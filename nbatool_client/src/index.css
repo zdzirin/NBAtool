@@ -1,7 +1,5 @@
 body {
   margin: 0;
-  width: 100vw;
-  height: 100vh;
   letter-spacing: 0.4px !important;
   font-family: "Sono", -apple-system, BlinkMacSystemFont, sans-serif !important;
   -webkit-font-smoothing: antialiased;
