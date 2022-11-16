@@ -76,6 +76,11 @@ export const Gamelog = ({ name, id, closeModal }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  // Reset prop info when values change
+  useEffect(() => {
+    setPropInfo({});
+  }, [selectedProp, overUnder, checkValue]);
+
   const clearValues = () => {
     setSelectedProp("");
     setCheckValue("");
@@ -140,7 +145,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
       <h2 style={{ color: "#e7e0da" }}>{name} Gamelog</h2>
       <span style={{ fontSize: 20, color: "#e7e0da" }}>
         {propInfo.hasOwnProperty("games")
-          ? `${name} has hit ${checkValue} ${selectedProp}'s in ${
+          ? `${name} has hit ${overUnder} ${checkValue} ${selectedProp}'s in ${
               propInfo.gamesHit
             } / ${propInfo.games} games or ${Math.floor(
               (propInfo.gamesHit / propInfo.games) * 100
@@ -177,21 +182,19 @@ export const Gamelog = ({ name, id, closeModal }) => {
 
         <div
           className={skeuo.skeuoshadow}
-          style={{ width: 25, marginLeft: 10, height: "fit-content" }}
+          style={{ width: 60, marginLeft: 10, height: "fit-content" }}
         >
           <input
             className={skeuo.skeuobutton}
             type="number"
             value={checkValue}
             onChange={(e) => setCheckValue(e.target.value)}
+            style={{ width: "100%" }}
           />
         </div>
       </div>
       <div className={styles.prop_select}>
-        <div
-          className={skeuo.skeuoshadow}
-          style={{ marginLeft: 10, height: "fit-content" }}
-        >
+        <div className={skeuo.skeuoshadow} style={{ height: "fit-content" }}>
           <Skeuobutton
             text="Clear"
             onClick={clearValues}

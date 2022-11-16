@@ -7,3 +7,9 @@
 button {
   font-family: "Sono", sans-serif;
 }
+
+@media screen and (max-width: 600px) {
+  #root {
+    width: 100vw;
+  }
+}
