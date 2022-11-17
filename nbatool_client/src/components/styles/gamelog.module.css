@@ -2,7 +2,7 @@
   width: calc(100% - 20px);
 }
 
-.container div {
+.container > div {
   max-width: 100%;
 }
 

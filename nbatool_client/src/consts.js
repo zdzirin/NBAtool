@@ -37,4 +37,5 @@ export const colors = {
   logo_orange: "#D54F42",
   green: "#0B6E4F",
   yellow_orange: "#E6A340",
+  almostWhite: "#e7e0da",
 };

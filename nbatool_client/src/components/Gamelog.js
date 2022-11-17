@@ -86,6 +86,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
   const [overUnder, setOverUnder] = useState("O");
   const [checkValue, setCheckValue] = useState(1.5);
   const [propInfo, setPropInfo] = useState({});
+  const [trendInfo, setTrendInfo] = useState({});
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -93,12 +94,14 @@ export const Gamelog = ({ name, id, closeModal }) => {
   // Reset prop info when values change
   useEffect(() => {
     setPropInfo({});
+    setTrendInfo({});
   }, [selectedProp, overUnder, checkValue]);
 
   const clearValues = () => {
     setSelectedProp("");
     setCheckValue("");
     setPropInfo({});
+    setTrendInfo({});
   };
 
   const checkProp = () => {
@@ -111,6 +114,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
     let games = 0;
     let gamesHit = 0;
     let gamesHitList = [];
+    let trendInfoObj = {};
 
     let prop = selectedProp;
     if (!Array.isArray(prop)) {
@@ -128,6 +132,8 @@ export const Gamelog = ({ name, id, closeModal }) => {
         amount += parseInt(game[p]);
       });
 
+      trendInfoObj[game["date_game"]] = amount;
+
       if (
         (amount > checkValue && overUnder === "O") ||
         (amount < checkValue && overUnder === "U")
@@ -138,6 +144,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
     });
 
     setPropInfo({ games, gamesHit, gamesHitList });
+    setTrendInfo(trendInfoObj);
   };
   useEffect(() => {
     const gamelog = getPlayerGamelog(id);
@@ -246,8 +253,16 @@ export const Gamelog = ({ name, id, closeModal }) => {
           <Skeuobutton text="Close Modal" onClick={closeModal} />
         </div>
       </div>
+
+      {Object.keys(trendInfo).length > 0 && (
+        <SkeuoboxDark style={{ marginBottom: 40 }}>
+          <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+            <TrendInfoBarGraph trendInfo={trendInfo} checkValue={checkValue} />
+          </div>
+        </SkeuoboxDark>
+      )}
       <SkeuoboxDark style={{ marginBottom: 40 }}>
-        <div style={{ maxWidth: "100%", overflowX: "scroll" }}>
+        <div style={{ maxWidth: "100%", overflowX: "auto" }}>
           <table className={table.table + " " + table.gl}>
             <thead>
               <tr>
@@ -294,6 +309,81 @@ export const Gamelog = ({ name, id, closeModal }) => {
           </table>
         </div>
       </SkeuoboxDark>
+    </div>
+  );
+};
+
+const TrendInfoBarGraph = ({ trendInfo, checkValue }) => {
+  let maxValue = Math.max(...Object.values(trendInfo));
+  maxValue += maxValue > 20 ? 5 : 2;
+
+  return (
+    <div
+      style={{
+        height: 300,
+        display: "flex",
+        flexFlow: "row nowrap",
+        position: "relative",
+        width: "fit-content",
+      }}
+    >
+      {Object.keys(trendInfo).map((key, i) => {
+        return (
+          <TrendInfoBar
+            key={key}
+            label={key}
+            value={trendInfo[key]}
+            checkValue={checkValue}
+            maxValue={maxValue}
+          />
+        );
+      })}
+      <div
+        className={skeuo.skeuoshadow}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: `calc(${(checkValue / maxValue) * 100}% + 25px)`,
+          height: 2,
+          backgroundColor: colors.logo_orange,
+        }}
+      />
+    </div>
+  );
+};
+
+const TrendInfoBar = ({ label, value, checkValue, maxValue }) => {
+  const propHit = value > checkValue;
+  return (
+    <div
+      style={{
+        height: "100%",
+        width: "fit-content",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "end",
+        justifyContent: "end",
+        alignItems: "center",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <span style={{ fontWeight: 700, fontSize: 18 }}>{value}</span>
+      <div
+        className={skeuo.skeuoshadow}
+        style={{
+          width: 15,
+          height: `${(value / maxValue) * 100}%`,
+          borderRadius: 6,
+          border: "1px solid",
+          borderColor: propHit ? colors.green : colors.almostWhite,
+          backgroundColor: propHit ? colors.green : colors.almostWhite,
+        }}
+      />
+      <div style={{ height: 20, margin: 5, marginBottom: 0 }}>
+        <span>{label}</span>
+      </div>
     </div>
   );
 };
