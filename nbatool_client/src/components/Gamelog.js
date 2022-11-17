@@ -46,10 +46,24 @@ const COLUMN_TO_LABEL = {
   plus_minus: "+/-",
 };
 
-const PROP_SELECT_DATA = Object.keys(COLUMN_TO_LABEL)
+const PropMap = {
+  Points: "pts",
+  Rebounds: "trb",
+  Assists: "ast",
+  Threes: "fg3",
+  PRA: ["pts", "trb", "ast"],
+  PA: ["pts", "ast"],
+  PR: ["pts", "trb"],
+  RA: ["trb", "ast"],
+  Steals: "stl",
+  Blocks: "blk",
+  Turnovers: "tov",
+};
+
+const PROP_SELECT_DATA = Object.keys(PropMap)
   .filter((e) => !EXCLUDED_PROPS.includes(e))
   .map((col) => {
-    return { name: COLUMN_TO_LABEL[col], value: col };
+    return { name: col, value: PropMap[col] };
   });
 
 const OVER_UNDER_SELECT_DATA = [
@@ -98,13 +112,25 @@ export const Gamelog = ({ name, id, closeModal }) => {
     let gamesHit = 0;
     let gamesHitList = [];
 
-    gameLogInfo.forEach((game, i) => {
-      if (!game.gs > 0) return;
+    let prop = selectedProp;
+    if (!Array.isArray(prop)) {
+      prop = [prop];
+    }
 
+    gameLogInfo.forEach((game, i) => {
+      if (!game.gs > 0) {
+        return;
+      }
       games++;
+
+      let amount = 0;
+      prop.forEach((p) => {
+        amount += parseInt(game[p]);
+      });
+
       if (
-        (game[selectedProp] > checkValue && overUnder === "O") ||
-        (game[selectedProp] < checkValue && overUnder === "U")
+        (amount > checkValue && overUnder === "O") ||
+        (amount < checkValue && overUnder === "U")
       ) {
         gamesHit++;
         gamesHitList.push(i);
@@ -156,7 +182,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
       <div className={styles.prop_select}>
         <div
           className={skeuo.skeuoshadow}
-          style={{ width: 100, height: "fit-content" }}
+          style={{ width: 150, height: "fit-content" }}
         >
           <SelectSearch
             options={PROP_SELECT_DATA}
