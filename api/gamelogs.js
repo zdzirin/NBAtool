@@ -9,6 +9,7 @@ async function getGameLogData(player) {
   console.log(`Getting gamelog data from: ${url}`);
   // Make API call to get HTML
   const res = await fetch(url);
+  console.log(`Response status: ${res.status}`);
   const data = await res.text();
 
   // Gets just the table to load into cheerio rather than the whole document
