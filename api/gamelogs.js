@@ -28,7 +28,7 @@ async function getGameLogData(player) {
     const game = {};
     e.children.forEach((e, i) => {
       // Ignore if no data or if it's the rank column
-      if (e.name === "th" || e.children.length < 1) return;
+      if (e.name === "th" || !e.children || e.children.length < 1) return;
 
       // Get stat name and data and add to game object
       const stat = e.attribs["data-stat"];
