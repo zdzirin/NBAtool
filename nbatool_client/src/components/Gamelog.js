@@ -17,6 +17,14 @@ const EXCLUDED_PROPS = [
   "mp",
 ];
 
+const EXCLUDED_HOME_AWAY_COLUMNS = [
+  "team_id",
+  "opp_id",
+  "game_result",
+  "gs",
+  "mp",
+];
+
 const COLUMN_TO_LABEL = {
   date_game: "Date",
   team_id: "Team",
@@ -80,6 +88,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
   } = useGamelogData();
 
   const [gameLogInfo, setGamelogInfo] = useState([]);
+  const [homeAwaySplits, setHomeAwaySplits] = useState({});
 
   // Will be used for props.cash functionality
   const [selectedProp, setSelectedProp] = useState("");
@@ -96,6 +105,58 @@ export const Gamelog = ({ name, id, closeModal }) => {
     setPropInfo({});
     setTrendInfo({});
   }, [selectedProp, overUnder, checkValue]);
+
+  useEffect(() => {
+    getHomeAwaySplits(gameLogInfo);
+  }, [gameLogInfo]);
+
+  const getHomeAwaySplits = (gamelog) => {
+    const homeGames = gamelog.filter(
+      (game) => !game.hasOwnProperty("game_location")
+    );
+    const awayGames = gamelog.filter((game) =>
+      game.hasOwnProperty("game_location")
+    );
+
+    const emptyGamelog = {};
+    Object.keys(COLUMN_TO_LABEL).forEach((key) => {
+      emptyGamelog[key] = 0;
+    });
+
+    const homeGamelog = homeGames.reduce(
+      (acc, game, i) => {
+        console.log(acc);
+        Object.keys(acc).forEach((key) => {
+          const value = Number(game[key]);
+          if (isNaN(value)) return;
+          acc[key] += value;
+          //Average
+          if (i !== 0) acc[key] /= 2;
+        });
+        return acc;
+      },
+      { ...emptyGamelog }
+    );
+
+    const awayGamelog = awayGames.reduce(
+      (acc, game, i) => {
+        Object.keys(acc).forEach((key) => {
+          const value = Number(game[key]);
+          if (isNaN(value)) return;
+          acc[key] += value;
+          //Average
+          if (i !== 0) acc[key] /= 2;
+        });
+        return acc;
+      },
+      { ...emptyGamelog }
+    );
+
+    setHomeAwaySplits({
+      home: { ...homeGamelog, date_game: "HOME" },
+      away: { ...awayGamelog, date_game: "AWAY" },
+    });
+  };
 
   const clearValues = () => {
     setSelectedProp("");
@@ -261,6 +322,67 @@ export const Gamelog = ({ name, id, closeModal }) => {
           </div>
         </SkeuoboxDark>
       )}
+
+      {Object.keys(homeAwaySplits).length > 0 && (
+        <SkeuoboxDark style={{ marginBottom: 40 }}>
+          <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+            <table className={table.table + " " + table.gl}>
+              <thead>
+                <tr>
+                  {GamelogColumns.filter(
+                    (col) => !EXCLUDED_HOME_AWAY_COLUMNS.includes(col)
+                  ).map((col, i) => (
+                    <th key={col} className={i === 0 && table.sticky}>
+                      {COLUMN_TO_LABEL[col]}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {GamelogColumns.filter(
+                    (col) => !EXCLUDED_HOME_AWAY_COLUMNS.includes(col)
+                  ).map((col, i) => {
+                    return (
+                      <td
+                        key={col}
+                        className={i === 0 && table.sticky}
+                        style={{
+                          backgroundColor: i === 0 && "#38393a",
+                        }}
+                      >
+                        {isNaN(homeAwaySplits.home[col])
+                          ? homeAwaySplits.home[col]
+                          : homeAwaySplits.home[col].toFixed(3)}
+                      </td>
+                    );
+                  })}
+                </tr>
+                <tr>
+                  {GamelogColumns.filter(
+                    (col) => !EXCLUDED_HOME_AWAY_COLUMNS.includes(col)
+                  ).map((col, i) => {
+                    return (
+                      <td
+                        key={col}
+                        className={i === 0 && table.sticky}
+                        style={{
+                          backgroundColor: i === 0 && "#333333",
+                        }}
+                      >
+                        {isNaN(homeAwaySplits.away[col])
+                          ? homeAwaySplits.away[col]
+                          : homeAwaySplits.away[col].toFixed(3)}
+                      </td>
+                    );
+                  })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </SkeuoboxDark>
+      )}
+
       <SkeuoboxDark style={{ marginBottom: 40 }}>
         <div style={{ maxWidth: "100%", overflowX: "auto" }}>
           <table className={table.table + " " + table.gl}>

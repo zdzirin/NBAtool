@@ -59,7 +59,12 @@ export const Header = ({ page, pages, setPage }) => {
           <h1 style={{ margin: "0px 0px 10px" }}>NBAtool</h1>
           <div>
             Giving you quick access to play-by-play positional statistics, and
-            team defensive data by position to predict any NBA matchup.{" "}
+            team defensive data by position to predict any NBA matchup. <br />
+            <b>
+              <br />
+              Click on the number with an exclamation point to view that players
+              gamelog and check how often they've hit a prop!
+            </b>
           </div>
         </div>
       </div>
