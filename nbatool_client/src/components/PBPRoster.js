@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ABBREVIATION_TO_TEAM, colors } from "../consts";
+import { usePBPRosters } from "../context/PBPContext";
 
 import styles from "./styles/pbrroster.module.css";
 import skeuo from "./styles/skeuomorphism.module.css";
@@ -18,7 +19,7 @@ export default function PBPRoster({
   setSelectedPlayer = (player) => {},
   constrain = false,
 }) {
-  const URL = `/api/pbp_roster/${team}`;
+  const { getTeamPBPRoster } = usePBPRosters();
   const [roster, setRoster] = useState([]);
   const [selectedPosition, setSelectedPosition] = useState("");
 
@@ -30,29 +31,22 @@ export default function PBPRoster({
     }
   };
 
-  // Loading / Error handling
-  const [rosterIsSet, setRosterIsSet] = useState(false);
-  const [rosterError, setRosterError] = useState(false);
+  useEffect(() => setRoster(getTeamPBPRoster(team)), [team]);
 
-  useEffect(() => {
-    if (rosterIsSet) return;
-    fetch(URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setRosterIsSet(true);
-        setRoster(data);
-      })
-      .catch((e) => {
-        console.log(e);
-        setRosterIsSet(true);
-      });
-  }, [rosterIsSet]);
+  const PositionLabel = ({ pos }) => (
+    <td
+      style={{
+        cursor: "pointer",
+        textDecoration: "underline",
+        backgroundColor: selectedPosition === pos && "#bbbbbb",
+      }}
+      onClick={() => handleSetSelectedPosition(pos)}
+    >
+      {pos}
+    </td>
+  );
 
-  useEffect(() => setRosterIsSet(false), [team]);
-
-  return !rosterIsSet ? (
-    <p>Roster Pending...</p>
-  ) : (
+  return (
     <div className={styles.container}>
       <h3
         style={{ marginBottom: 20 }}
@@ -72,19 +66,11 @@ export default function PBPRoster({
             }
           >
             <td>Player</td>
+            <td>Pos.</td>
             <td>GP</td>
             <td>Mins</td>
             {["PG", "SG", "SF", "PF", "C"].map((pos) => (
-              <td
-                style={{
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                  backgroundColor: selectedPosition === pos && "#bbbbbb",
-                }}
-                onClick={() => handleSetSelectedPosition(pos)}
-              >
-                {pos}
-              </td>
+              <PositionLabel pos={pos} />
             ))}
             <td className={styles.hide}>On Court +/-</td>
             <td className={styles.hide}>Net +/-</td>
@@ -113,10 +99,16 @@ function createTableBodyFromRoster(
 ) {
   let table = [];
   roster.forEach((player) => {
-    let fields = Object.keys(player);
-    const playerID = player.g.link.split("/")[5];
+    const thisPlayer = { ...player };
 
-    const selectedPlayer = { name: player.player.name, id: playerID };
+    let playerID = thisPlayer.player_link.split("/")[3];
+    playerID = playerID.substring(0, playerID.indexOf("."));
+
+    delete thisPlayer.player_link;
+    delete thisPlayer.team_id;
+    let fields = Object.keys(thisPlayer);
+
+    const selectedPlayer = { name: thisPlayer.player, id: playerID };
     const onClick = () => setSelectedPlayer(selectedPlayer);
 
     let color = false;
@@ -141,7 +133,7 @@ function createTableBodyFromRoster(
         }}
       >
         {fields.map((field) =>
-          createTableDataFromField(field, player[field], onClick)
+          createTableDataFromField(field, thisPlayer[field], onClick)
         )}
       </tr>
     );
@@ -152,19 +144,28 @@ function createTableBodyFromRoster(
 function createTableDataFromField(field, value, onClick) {
   if (field === "player") {
     return (
-      <td style={{ textDecoration: "underline" }}>
-        <a href={value.link} target="_blank" rel="noreferrer">
-          {value.name}
-        </a>
+      <td
+        onClick={onClick}
+        style={{ fontWeight: 500, textDecoration: "underline" }}
+      >
+        {value}
       </td>
     );
-  } else if (field === "g") {
+  }
+
+  if (field === "pos") {
+    return <td onClick={onClick}>{value}</td>;
+  }
+
+  if (field === "g") {
     return (
       <td onClick={onClick} style={{ textDecoration: "underline" }}>
-        {value.name}!
+        {value}!
       </td>
     );
-  } else if (["pct_2", "pct_4"].includes(field)) {
+  }
+
+  if (["pct_2", "pct_4"].includes(field)) {
     return (
       <td
         style={{
@@ -175,22 +176,22 @@ function createTableDataFromField(field, value, onClick) {
         {value}
       </td>
     );
-  } else {
-    return (
-      <td
-        className={
-          field === "plus_minus_net" || field === "plus_minus_on"
-            ? styles.hide
-            : ""
-        }
-      >
-        {trumPlusMinusValue(value)}
-      </td>
-    );
   }
+
+  return (
+    <td
+      className={
+        field === "plus_minus_net" || field === "plus_minus_on"
+          ? styles.hide
+          : ""
+      }
+    >
+      {trimPlusMinusValue(value)}
+    </td>
+  );
 }
 
-const trumPlusMinusValue = (value) => {
+const trimPlusMinusValue = (value) => {
   value = `${value}`;
   value = value.substring(0, 4);
   if (value[3] === ".") {

@@ -7,16 +7,19 @@ import App from "./NBAtool";
 import "./index.css";
 import "./select.css";
 import { GamelogContextProvider } from "./context/GamelogContext";
+import { PBPContextProvider } from "./context/PBPContext";
 
 //import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DBPContextProvider>
-      <GamelogContextProvider>
-        <App />
-      </GamelogContextProvider>
-    </DBPContextProvider>
+    <PBPContextProvider>
+      <DBPContextProvider>
+        <GamelogContextProvider>
+          <App />
+        </GamelogContextProvider>
+      </DBPContextProvider>
+    </PBPContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

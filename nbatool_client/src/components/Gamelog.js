@@ -318,7 +318,11 @@ export const Gamelog = ({ name, id, closeModal }) => {
       {Object.keys(trendInfo).length > 0 && (
         <SkeuoboxDark style={{ marginBottom: 40 }}>
           <div style={{ maxWidth: "100%", overflowX: "auto" }}>
-            <TrendInfoBarGraph trendInfo={trendInfo} checkValue={checkValue} />
+            <TrendInfoBarGraph
+              trendInfo={trendInfo}
+              checkValue={checkValue}
+              overUnder={overUnder}
+            />
           </div>
         </SkeuoboxDark>
       )}
@@ -435,7 +439,7 @@ export const Gamelog = ({ name, id, closeModal }) => {
   );
 };
 
-const TrendInfoBarGraph = ({ trendInfo, checkValue }) => {
+const TrendInfoBarGraph = ({ trendInfo, checkValue, overUnder }) => {
   let maxValue = Math.max(...Object.values(trendInfo));
   maxValue += maxValue > 20 ? 5 : 2;
 
@@ -457,6 +461,7 @@ const TrendInfoBarGraph = ({ trendInfo, checkValue }) => {
             value={trendInfo[key]}
             checkValue={checkValue}
             maxValue={maxValue}
+            overUnder={overUnder}
           />
         );
       })}
@@ -475,8 +480,10 @@ const TrendInfoBarGraph = ({ trendInfo, checkValue }) => {
   );
 };
 
-const TrendInfoBar = ({ label, value, checkValue, maxValue }) => {
-  const propHit = value > checkValue;
+const TrendInfoBar = ({ label, value, checkValue, maxValue, overUnder }) => {
+  const propHit =
+    (value > checkValue && overUnder === "O") ||
+    (value < checkValue && overUnder === "U");
   return (
     <div
       style={{

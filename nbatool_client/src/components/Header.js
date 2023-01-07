@@ -62,8 +62,8 @@ export const Header = ({ page, pages, setPage }) => {
             team defensive data by position to predict any NBA matchup. <br />
             <b>
               <br />
-              Click on the number with an exclamation point to view that players
-              gamelog and check how often they've hit a prop!
+              Click on a players name or the number with an exclamation point to
+              view that players gamelog and check how often they've hit a prop!
             </b>
           </div>
         </div>

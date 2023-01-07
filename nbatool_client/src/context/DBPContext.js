@@ -24,7 +24,9 @@ export const DBPContextProvider = ({ children }) => {
   }, []);
 
   return loading ? (
-    <h1 style={{ color: "#e7e0da" }}>NBATool is loading!</h1>
+    <h1 style={{ color: "#e7e0da" }}>
+      NBATool is loading Defense-By-Position Data!
+    </h1>
   ) : (
     <DBPContext.Provider value={DBPData}>{children}</DBPContext.Provider>
   );

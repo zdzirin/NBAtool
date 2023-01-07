@@ -12,15 +12,15 @@ app.get("/api", (req, res) => {
 });
 
 // Rosters
-const { getPBPRosterByTeam } = require("./api/pbproster.js");
+const { getLeaguePBPRoster } = require("./api/pbproster.js");
 
-app.get("/api/pbp_roster/:team", (req, res) => {
-  getPBPRosterByTeam(req.params.team)
+app.get("/api/pbp_roster", (req, res) => {
+  getLeaguePBPRoster()
     .then((roster) => res.json(roster))
     .catch((e) => {
       console.log(e);
       res.json({
-        error: `There was an error fetching play by play roster for team ${req.params.team}`,
+        error: `There was an error fetching play by play roster`,
       });
     });
 });

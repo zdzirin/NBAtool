@@ -3,7 +3,10 @@ import cheerio from "cheerio";
 
 let team = "CHI";
 //let url = `https://www.basketball-reference.com/teams/${team}/2022.html`;
-let url = `https://widgets.sports-reference.com/wg.fcgi?css=1&site=bbr&url=%2Fteams%2FIND%2F2022.html&div=div_pbp`;
+//let url = `https://widgets.sports-reference.com/wg.fcgi?css=1&site=bbr&url=%2Fteams%2FIND%2F2022.html&div=div_pbp`;
+
+let url =
+  "https://www.basketball-reference.com/leagues/NBA_2023_play-by-play.html";
 const POSITIONS = { 1: "PG", 2: "SG", 3: "SF", 4: "PF", 5: "C" };
 
 let players = [];
@@ -54,9 +57,12 @@ fetch(url)
     let start = data.indexOf("<table");
     let end = data.indexOf("</table>") + 8; // Addint the 8 characters in '</table> to the index to make sure that tag is picked up
     let table = data.substring(start, end);
+    console.log(table);
+    /*
     const $ = cheerio.load(table);
     $("tbody tr").each((i, el) => players.push(parseRow(el)));
     console.log(players);
+    */
   })
   .catch((e) => console.log(e));
 
