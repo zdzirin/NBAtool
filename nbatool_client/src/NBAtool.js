@@ -5,10 +5,9 @@ import { Header } from "./components/Header";
 import "./App.css";
 import { Matchups } from "./pages/Matchups";
 import { LeagueDefense } from "./pages/LeagueDefense";
-import { Modal } from "./components/Modal";
-import { Gamelog } from "./components/Gamelog";
+import { Players } from "./pages/Players";
 
-const PAGES = ["Matchups", "League Defenses"];
+const PAGES = ["Matchups", "League Defenses", "Players"];
 function App() {
   const [page, setPage] = useState(PAGES[0]);
   return (
@@ -16,6 +15,7 @@ function App() {
       <Header pages={PAGES} page={page} setPage={setPage} />
       {page === "Matchups" && <Matchups />}
       {page === "League Defenses" && <LeagueDefense />}
+      {page === "Players" && <Players />}
       {/* <Modal>
         <Gamelog id={"paulch01"} name="Keldon Johnson" />
       </Modal> */}

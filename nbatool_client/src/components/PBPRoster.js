@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ABBREVIATION_TO_TEAM, colors } from "../consts";
 import { usePBPRosters } from "../context/PBPContext";
+import { getPlayerIDFromLink } from "../pages/Players";
 
 import styles from "./styles/pbrroster.module.css";
 import skeuo from "./styles/skeuomorphism.module.css";
@@ -101,8 +102,7 @@ function createTableBodyFromRoster(
   roster.forEach((player) => {
     const thisPlayer = { ...player };
 
-    let playerID = thisPlayer.player_link.split("/")[3];
-    playerID = playerID.substring(0, playerID.indexOf("."));
+    let playerID = getPlayerIDFromLink(thisPlayer.player_link);
 
     delete thisPlayer.player_link;
     delete thisPlayer.team_id;

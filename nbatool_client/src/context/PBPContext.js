@@ -37,7 +37,9 @@ export const usePBPRosters = () => {
 
   const getTeamPBPRoster = (team) => {
     if (!team) return [];
-    return PBPData.filter((e) => e.team_id === team);
+    return PBPData.filter((e) => e.team_id === team).sort(
+      (a, b) => Number(b.mp) - Number(a.mp)
+    );
   };
 
   return { PBPRoster: PBPData, getTeamPBPRoster };

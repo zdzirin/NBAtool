@@ -125,7 +125,6 @@ export const Gamelog = ({ name, id, closeModal }) => {
 
     const homeGamelog = homeGames.reduce(
       (acc, game, i) => {
-        console.log(acc);
         Object.keys(acc).forEach((key) => {
           const value = Number(game[key]);
           if (isNaN(value)) return;
