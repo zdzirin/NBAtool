@@ -1,10 +1,6 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
-const {
-  DBP_INDEX_TO_STAT,
-  ABBREVIATION_TO_TEAM,
-  TEAM_TO_ABBREVIATION,
-} = require("../consts.js");
+const { DBP_INDEX_TO_STAT, TEAM_TO_ABBREVIATION } = require("../consts.js");
 
 let url =
   "https://www.fantasypros.com/daily-fantasy/nba/fanduel-defense-vs-position.php";

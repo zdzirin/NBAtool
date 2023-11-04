@@ -1,10 +1,11 @@
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const { getYearForResults } = require("./lib/getYearForResults");
 
 EXCLUDED_STATS = ["game_season", "age"];
 
 async function getGameLogData(player) {
-  const url = `https://www.basketball-reference.com/players/m/${player}/gamelog/2023/`;
+  const url = `https://www.basketball-reference.com/players/m/${player}/gamelog/${getYearForResults()}`;
 
   console.log(`Getting gamelog data from: ${url}`);
   // Make API call to get HTML
