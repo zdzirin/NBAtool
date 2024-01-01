@@ -33,7 +33,7 @@ function findRankings(dbpData) {
   });
 }
 
-async function getFullData(team) {
+async function getFullData() {
   // Fetch DBP data from host
   let res = await fetch(url);
   let data = await res.text();
@@ -69,13 +69,14 @@ async function getFullData(team) {
       if (i === 0) {
         // Get team
         row.team = TEAM_TO_ABBREVIATION[e.children[1].data];
-      } else if (i < 8) {
+      } else if (i > 1 && i < 9) {
+        // 1 === # of games played which we don't care about
         // Get stat data
         let elClass = e.attribs.class.split(" ");
         let difficulty =
           elClass.length > 1 ? (elClass[1] === "hard" ? 1 : -1) : 0;
         let amt = e.children[0].children[0].data;
-        row[DBP_INDEX_TO_STAT[i]] = { difficulty, amt };
+        row[DBP_INDEX_TO_STAT[i - 1]] = { difficulty, amt };
       }
     });
 
@@ -88,11 +89,16 @@ async function getFullData(team) {
 
 async function getTeamData(team) {
   let teamData = [];
+  // Get the team data html
   let res = await fetch(url);
   let data = await res.text();
+
+  // Find the table in the html
   let start = data.indexOf("<table");
   let end = data.indexOf("</table>") + 8; // Adding the 8 characters in '</table> to the index to make sure that tag is picked up
   let table = data.substring(start, end);
+
+  // Load the table into cheerio and iterate through each row
   const $ = cheerio.load(table);
   $("table tbody tr").each((i, e) => {
     let classes = e.attribs.class.split(" ");

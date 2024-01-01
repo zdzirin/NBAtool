@@ -41,6 +41,7 @@ app.get("/api/full_dbp_stats", (req, res) => {
     });
 });
 
+// This isn't being used right now
 app.get("/api/dbp_stats/:team", (req, res) => {
   getDBPByTeam(req.params.team)
     .then((stats) => {
