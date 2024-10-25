@@ -16,7 +16,7 @@ The server supporting the application is a node.js express server which handles 
 
 #### API Routes
 
-The following api routes are used to serve data to the front-end. The methods used by each route can be found in the `nbatool/api/` folder. 
+The following api routes are used to serve data to the front-end. The methods used by each route can be found in the `nbatool/api/` folder.
 There is no database, currently each request to the api scrapes data from external websites to get the requested information. The webscraping is done using node-fetch, a node.js clone of the Fetch API and Cheerio, a stripped down node.js clone of jQuery. The routes are as follows:
 
 
@@ -24,7 +24,7 @@ There is no database, currently each request to the api scrapes data from extern
 **Get Play-By-Play roster** `/api/pbp_rosters/{team}`
 
 Returns a json array of player objects representing the teams play-by-play roster
-A player object being: 
+A player object being:
 ```
 {
   player: { name, link }, // Player name and link to profile
@@ -49,9 +49,9 @@ A stat object being
 {
   position, // What defensive position the stats are being allowed to
   range, // Lookback period in days, 0 for season
-  pts: { // Points Allowed 
+  pts: { // Points Allowed
     diffictulty, // -1 for difficult, 0 for average, 1 for easy
-    amt // Amount of stat allowed to position per game 
+    amt // Amount of stat allowed to position per game
     },
   reb: { difficulty, amt }, // Rebounds
   ast: { difficulty, amt }, // Assists
@@ -67,7 +67,7 @@ for each of these team abbreviations are defined in `nbatool/consts.js`
 ---
 ### Front End
 
-The front end for the application is a create-react-app setup located in the `nbatool_client folder`. It is to be built into the `nbatool_client/build/` folder before being served by the server.
+The front end for the application is a create-react-app setup located in the `nbatool_client folder`. It is to be built into the `nbatool_client/build/` folder before being served by the express server.
 
 #### Organization
 
@@ -76,7 +76,7 @@ The orgaization of the client project within the `src` folder is as follows:
 src
 |- images // Images for the application (currently only logo)
 |
-|- components // Components used to display the data from the backend. 
+|- components // Components used to display the data from the backend.
 |  |- styles // CSS Modules for component styles
 |  | * component javascript files
 |
@@ -106,4 +106,3 @@ The `components/DBPStats.js` and `components/PBPRosters` files define react comp
   <DBPStats team="CHI" />
 </div>
 ```
-

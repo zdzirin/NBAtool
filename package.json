@@ -1,20 +1,20 @@
 {
-  "name": "nbatool",
-  "version": "1.0.0",
-  "main": "server.js",
-  "license": "MIT",
-  "scripts": {
-    "start": "node server.js",
-    "heroku-postbuild": "cd nbatool_client && yarn && yarn run build"
-  },
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.10",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "node-fetch": "2.0",
-    "path": "^0.12.7"
-  },
-  "engines": {
-    "node": "16.x"
-  }
+    "name": "nbatool",
+    "version": "1.0.0",
+    "main": "server.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "node server.js",
+        "heroku-postbuild": "cd nbatool_client && yarn && yarn run build"
+    },
+    "dependencies": {
+        "cheerio": "^1.0.0-rc.10",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "node-fetch": "2.0",
+        "path": "^0.12.7"
+    },
+    "engines": {
+        "node": "16.x"
+    }
 }
