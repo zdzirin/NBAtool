@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node server.js",
-        "heroku-postbuild": "cd nbatool_client && yarn && yarn run build"
+        "heroku-postbuild": "cd nbatool_client && npm install && npm run build"
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.10",
