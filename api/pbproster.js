@@ -1,6 +1,7 @@
 const { PBP_PLAYER_DATA } = require("../consts.js");
-const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const fetch = (await import("node-fetch")).default;
+
 const { getYearForResults } = require("./lib/getYearForResults.js");
 
 async function getLeaguePBPRoster(year) {
@@ -19,7 +20,7 @@ async function getLeaguePBPRoster(year) {
     });
 
     players = players.filter((player) => player !== null);
-    //console.log(players);
+    console.log(players);
     return players;
 }
 
@@ -111,5 +112,3 @@ const PLAYER_DATA = [
 ];
 
 module.exports = { getLeaguePBPRoster };
-
-getLeaguePBPRoster(2025);
