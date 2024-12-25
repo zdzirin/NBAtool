@@ -1,8 +1,11 @@
 // Express import and settings
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-const { getYearForResults } = require("./api/lib/getYearForResults.js");
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { getYearForResults } from "./api/lib/getYearForResults.js";
+import { getLeaguePBPRoster } from "./api/pbproster.js";
+import { getDBPByTeam, getDBPFull } from "./api/defensebyposition.js";
+import { getGameLogByPlayer } from "./api/gamelogs.js";
 
 const app = express();
 const port = 1738;
@@ -14,7 +17,6 @@ app.get("/api", (req, res) => {
 });
 
 // Rosters
-const { getLeaguePBPRoster } = require("./api/pbproster.js");
 
 app.get("/api/pbp_roster", (req, res) => {
     const year = getYearFromRequest(req);
@@ -29,8 +31,6 @@ app.get("/api/pbp_roster", (req, res) => {
 });
 
 // Defense
-const { getDBPByTeam, getDBPFull } = require("./api/defensebyposition.js");
-
 app.get("/api/full_dbp_stats", (req, res) => {
     const year = getYearFromRequest(req);
     getDBPFull(year)
@@ -60,8 +60,6 @@ app.get("/api/dbp_stats/:team", (req, res) => {
 });
 
 // Game Log
-const { getGameLogByPlayer } = require("./api/gamelogs.js");
-
 app.get("/api/gamelog/:player", (req, res) => {
     getGameLogByPlayer(req.params.player)
         .then((gamelog) => {

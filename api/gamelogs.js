@@ -1,6 +1,6 @@
-const fetch = (await import("node-fetch")).default;
-const cheerio = require("cheerio");
-const { getYearForResults } = require("./lib/getYearForResults");
+import fetch from "node-fetch";
+import cheerio from "cheerio";
+import { getYearForResults } from "./lib/getYearForResults";
 
 EXCLUDED_STATS = ["game_season", "age"];
 
@@ -64,4 +64,4 @@ async function getGameLogByPlayer(player) {
     }
 }
 
-module.exports = { getGameLogByPlayer };
+export { getGameLogByPlayer };

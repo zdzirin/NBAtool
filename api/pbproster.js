@@ -1,8 +1,8 @@
-const { PBP_PLAYER_DATA } = require("../consts.js");
-const cheerio = require("cheerio");
-const fetch = (await import("node-fetch")).default;
+import { PBP_PLAYER_DATA } from "../consts.js";
+import cheerio from "cheerio";
+import fetch from "node-fetch";
 
-const { getYearForResults } = require("./lib/getYearForResults.js");
+//const { getYearForResults } = require("./lib/getYearForResults.js");
 
 async function getLeaguePBPRoster(year) {
     const url = `https://www.basketball-reference.com/leagues/NBA_${year}_play-by-play.html`;
@@ -111,4 +111,4 @@ const PLAYER_DATA = [
     "plus_minus_net",
 ];
 
-module.exports = { getLeaguePBPRoster };
+export { getLeaguePBPRoster };
