@@ -14,35 +14,53 @@ async function getLeaguePBPRoster(year) {
     const table = data.substring(start, end);
 
     const $ = cheerio.load(table);
-    $("tbody tr.full_table").each((i, el) => players.push(parseRow(el)));
+    $("tbody tr").each((i, el) => {
+        players.push(parseRow(el));
+    });
 
+    players = players.filter((player) => player !== null);
+    //console.log(players);
     return players;
 }
 
 const parseRow = (el) => {
     let player = {};
+
     el.children.forEach((el, j) => {
+        if (!el.attribs) {
+            return;
+        }
+
         let attr = el.attribs["data-stat"];
         addAttributeData(player, attr, el);
     });
-    return player;
+
+    return player.team_id !== "2TM" ? player : null;
 };
 
 const addAttributeData = (player, attr, el) => {
     if (PLAYER_DATA.includes(attr)) {
         // Value is a link for these so we select data from inside
-        if (attr == "player" || attr == "team_id") {
+        if (LINK_ATTRIBUTES.includes(attr)) {
+            const LINK_ATTR_MAP = {
+                player: "player",
+                name_display: "player",
+                team_name_abbr: "team_id",
+                team_id: "team_id",
+            };
+
             // Players with multiple teams have a "total" row
-            if (el.children[0].data === "TOT") {
-                player[attr] = el.children[0].data;
+            if (el.children[0].data === "2TM") {
+                player[LINK_ATTR_MAP[attr]] = el.children[0].data;
                 return;
             }
 
-            player[attr] = el.children[0].children[0].data;
+            player[LINK_ATTR_MAP[attr]] = el.children[0].children[0].data;
 
-            if (attr == "player") {
+            if (attr == "player" || attr == "name_display") {
                 player["player_link"] = el.children[0].attribs.href;
             }
+
             return;
         }
 
@@ -57,15 +75,30 @@ const addAttributeData = (player, attr, el) => {
             return;
         }
 
+        if (attr === "mp") {
+            // Might be bolded, if so we need to get the data from inside the bold tag
+            if (el.children[0].name === "strong") {
+                player[attr] = el.children[0].children[0].data;
+            } else {
+                player[attr] = el.children[0].data;
+            }
+
+            return;
+        }
+
         // If no special case simply set the attribute
         player[attr] = el.children[0].data;
     }
 };
 
+const LINK_ATTRIBUTES = ["player", "team_id", "team_name_abbr", "name_display"];
+
 const PLAYER_DATA = [
     "player",
+    "name_display",
     "pos",
     "team_id",
+    "team_name_abbr",
     "g",
     "mp",
     "pct_1",
@@ -78,3 +111,5 @@ const PLAYER_DATA = [
 ];
 
 module.exports = { getLeaguePBPRoster };
+
+getLeaguePBPRoster(2025);
