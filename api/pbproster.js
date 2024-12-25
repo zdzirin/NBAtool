@@ -1,5 +1,5 @@
 import { PBP_PLAYER_DATA } from "../consts.js";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import fetch from "node-fetch";
 
 //const { getYearForResults } = require("./lib/getYearForResults.js");

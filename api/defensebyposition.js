@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import { DBP_INDEX_TO_STAT, TEAM_TO_ABBREVIATION } from "../consts.js";
 
 let url =
