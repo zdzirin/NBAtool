@@ -10,6 +10,9 @@ import { getGameLogByPlayer } from "./api/gamelogs.js";
 const app = express();
 const port = 1738;
 app.use(cors());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "nbatool_client/build")));
 
 app.get("/api", (req, res) => {
