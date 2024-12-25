@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 import * as cheerio from "cheerio";
 import { getYearForResults } from "./lib/getYearForResults.js";
 
-EXCLUDED_STATS = ["game_season", "age"];
+const EXCLUDED_STATS = ["game_season", "age"];
 
 async function getGameLogData(player) {
     const url = `https://www.basketball-reference.com/players/m/${player}/gamelog/${getYearForResults()}`;
