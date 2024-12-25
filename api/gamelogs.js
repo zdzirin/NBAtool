@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import cheerio from "cheerio";
-import { getYearForResults } from "./lib/getYearForResults";
+import { getYearForResults } from "./lib/getYearForResults.js";
 
 EXCLUDED_STATS = ["game_season", "age"];
 
