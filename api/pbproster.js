@@ -87,6 +87,11 @@ const addAttributeData = (player, attr, el) => {
             return;
         }
 
+        if (attr === "games") {
+            player.g = el.children[0].data;
+            return;
+        }
+
         // If no special case simply set the attribute
         player[attr] = el.children[0].data;
     }
@@ -101,6 +106,7 @@ const PLAYER_DATA = [
     "team_id",
     "team_name_abbr",
     "g",
+    "games",
     "mp",
     "pct_1",
     "pct_2",
